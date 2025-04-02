@@ -1,7 +1,7 @@
 import streamlit as st
 from openai import OpenAI
 from backend import process_question
-from supabase import create_client
+
 
 # Show title and description.
 st.title("💬 Chatbot")
@@ -18,18 +18,6 @@ openai_api_key = st.text_input("OpenAI API Key", type="password")
 if not openai_api_key:
     st.info("Please add your OpenAI API key to continue.", icon="🗝️")
 else:
-
-    # Create a Supabase connection using the API key.
-    # Initialize connection.
-    # Uses st.cache_resource to only run once.
-    @st.cache_resource
-    def init_connection():
-        url = st.secrets["SUPABASE_URL"]
-        key = st.secrets["SUPABASE_KEY"]
-        return create_client(url, key)
-
-    client = init_connection()
-
 
     # # Create an OpenAI client.
     # client = OpenAI(api_key=openai_api_key)
