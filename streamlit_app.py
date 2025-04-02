@@ -1,5 +1,7 @@
 import streamlit as st
 from openai import OpenAI
+from backend import process_question
+from supabase import create_client
 
 # Show title and description.
 st.title("💬 Chatbot")
@@ -17,8 +19,20 @@ if not openai_api_key:
     st.info("Please add your OpenAI API key to continue.", icon="🗝️")
 else:
 
-    # Create an OpenAI client.
-    client = OpenAI(api_key=openai_api_key)
+    # Create a Supabase connection using the API key.
+    # Initialize connection.
+    # Uses st.cache_resource to only run once.
+    @st.cache_resource
+    def init_connection():
+        url = st.secrets["SUPABASE_URL"]
+        key = st.secrets["SUPABASE_KEY"]
+        return create_client(url, key)
+
+    client = init_connection()
+
+
+    # # Create an OpenAI client.
+    # client = OpenAI(api_key=openai_api_key)
 
     # Create a session state variable to store the chat messages. This ensures that the
     # messages persist across reruns.
@@ -39,15 +53,18 @@ else:
         with st.chat_message("user"):
             st.markdown(prompt)
 
-        # Generate a response using the OpenAI API.
-        stream = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.messages
-            ],
-            stream=True,
-        )
+        # # Generate a response using the OpenAI API.
+        # stream = client.chat.completions.create(
+        #     model="gpt-3.5-turbo",
+        #     messages=[
+        #         {"role": m["role"], "content": m["content"]}
+        #         for m in st.session_state.messages
+        #     ],
+        #     stream=True,
+        # )
+
+        # Generate a response using the Supabase function
+        stream = process_question.process(prompt,client)
 
         # Stream the response to the chat using `st.write_stream`, then store it in 
         # session state.

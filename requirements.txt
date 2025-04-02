@@ -1,2 +1,4 @@
 streamlit
 openai
+st-supabase-connection==2.0.1
+supabase
