@@ -12,11 +12,11 @@ def init_connection():
 
 
 
-def process(question,supabase_client):
+def process(question):
     # Create a Supabase connection using the API key.
     # Initialize connection.
     # Uses st.cache_resource to only run once.
-    client = init_connection()
+    supabase_client = init_connection()
     response = supabase_client.functions.invoke(
         "ask-custom-data",
         invoke_options={"body": json.dumps({ "query": question })})

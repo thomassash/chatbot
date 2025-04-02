@@ -52,7 +52,7 @@ else:
         # )
 
         # Generate a response using the Supabase function
-        stream = process_question.process(prompt,client)
+        stream = process_question.process(prompt)
 
         # Stream the response to the chat using `st.write_stream`, then store it in 
         # session state.
