@@ -23,3 +23,7 @@ def process(question):
     return response
 
 
+def stream_data(string_in):
+    for word in string_in.split(" "):
+        yield word + " "
+        time.sleep(0.02)
