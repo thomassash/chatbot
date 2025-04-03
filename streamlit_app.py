@@ -1,5 +1,6 @@
 import streamlit as st
 from openai import OpenAI
+import json
 from backend import process_question
 
 
@@ -52,10 +53,10 @@ else:
         # )
 
         # Generate a response using the Supabase function
-        stream = process_question.process(prompt)
+        stream = json.loads(process_question.process(prompt))
 
         # Stream the response to the chat using `st.write_stream`, then store it in 
         # session state.
         with st.chat_message("assistant"):
-            response = st.write_stream(stream)
+            response = st.write_stream(stream['text'])
         st.session_state.messages.append({"role": "assistant", "content": response})
