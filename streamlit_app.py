@@ -54,9 +54,10 @@ else:
 
         # Generate a response using the Supabase function
         stream = json.loads(process_question.process(prompt))
+        response = stream['text'].replace("\n", "")
 
         # Stream the response to the chat using `st.write_stream`, then store it in 
         # session state.
         with st.chat_message("assistant"):
-            response = st.write_stream(stream['text'].replace("\n", ""))
+            st.markdown(response)
         st.session_state.messages.append({"role": "assistant", "content": response})
