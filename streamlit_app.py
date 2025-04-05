@@ -58,6 +58,7 @@ else:
 
             # Generate a response using the Supabase function
             stream = json.loads(process_question.process(prompt + "If the question is not about " + company + ", please say 'I am only able to discuss the company selected.'."))
+            st.info(str(stream))
             response = stream['text'].replace("\n", "")
             context = stream['contextText'].replace("\n", "")
 
