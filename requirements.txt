@@ -2,3 +2,4 @@ streamlit
 openai
 st-supabase-connection==2.0.1
 supabase
+streamlit-elements==0.1.*
