@@ -74,4 +74,4 @@ with col2:
     if not company:
         pass
     else:
-        st.title(company + " Information")
+        st.title(st.session_state.company + " Information")
