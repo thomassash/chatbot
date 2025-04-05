@@ -19,45 +19,50 @@ openai_api_key = st.text_input("OpenAI API Key", type="password")
 if not openai_api_key:
     st.info("Please add your OpenAI API key to continue.", icon="🗝️")
 else:
+    company = st.text_input("What company are you interested in?")
+    if not company:
+        st.info("Please add a company name to continue.", icon="🏢")
+    else:
+        st.session_state.company = company
+        # # Create an OpenAI client.
+        # client = OpenAI(api_key=openai_api_key)
 
-    # # Create an OpenAI client.
-    # client = OpenAI(api_key=openai_api_key)
+        # Create a session state variable to store the chat messages. This ensures that the
+        # messages persist across reruns.
+        if "messages" not in st.session_state:
+            st.session_state.messages = []
 
-    # Create a session state variable to store the chat messages. This ensures that the
-    # messages persist across reruns.
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
+        # Display the existing chat messages via `st.chat_message`.
+        for message in st.session_state.messages:
+            with st.chat_message(message["role"]):
+                st.markdown(message["content"])
 
-    # Display the existing chat messages via `st.chat_message`.
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
+        # Create a chat input field to allow the user to enter a message. This will display
+        # automatically at the bottom of the page.
+        if prompt := st.chat_input("What is up?"):
 
-    # Create a chat input field to allow the user to enter a message. This will display
-    # automatically at the bottom of the page.
-    if prompt := st.chat_input("What is up?"):
+            # Store and display the current prompt.
+            st.session_state.messages.append({"role": "user", "content": prompt})
+            with st.chat_message("user"):
+                st.markdown(prompt)
 
-        # Store and display the current prompt.
-        st.session_state.messages.append({"role": "user", "content": prompt})
-        with st.chat_message("user"):
-            st.markdown(prompt)
+            # # Generate a response using the OpenAI API.
+            # stream = client.chat.completions.create(
+            #     model="gpt-3.5-turbo",
+            #     messages=[
+            #         {"role": m["role"], "content": m["content"]}
+            #         for m in st.session_state.messages
+            #     ],
+            #     stream=True,
+            # )
 
-        # # Generate a response using the OpenAI API.
-        # stream = client.chat.completions.create(
-        #     model="gpt-3.5-turbo",
-        #     messages=[
-        #         {"role": m["role"], "content": m["content"]}
-        #         for m in st.session_state.messages
-        #     ],
-        #     stream=True,
-        # )
+            # Generate a response using the Supabase function
+            stream = json.loads(process_question.process(prompt))
+            response = stream['text'].replace("\n", "")
+            context = stream['contextText'].replace("\n", "")
 
-        # Generate a response using the Supabase function
-        stream = json.loads(process_question.process(prompt))
-        response = stream['text'].replace("\n", "")
-
-        # Stream the response to the chat using `st.write_stream`, then store it in 
-        # session state.
-        with st.chat_message("assistant"):
-            st.write_stream(process_question.stream_data(response))
-        st.session_state.messages.append({"role": "assistant", "content": response})
+            # Stream the response to the chat using `st.write_stream`, then store it in 
+            # session state.
+            with st.chat_message("assistant"):
+                st.write_stream(process_question.stream_data(response))
+            st.session_state.messages.append({"role": "assistant", "content": response})
