@@ -71,7 +71,7 @@ with col1:
                 st.session_state.messages.append({"role": "assistant", "content": response})
 
 with col2:
-    if not company:
+    if not st.session_state.company:
         pass
     else:
         st.title(st.session_state.company + " Information")
