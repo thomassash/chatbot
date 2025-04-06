@@ -76,7 +76,7 @@ with col2:
         pass
     else:
         st.title(st.session_state.company + " Information")
-            ma_window = 14
-            stock_fig = finance_charts.stock_chart(st.session_state.company, ma_window)
-            st.subheader(f"Closing Price with {ma_window}-Day Moving Average")
-            st.pyplot(fig)
+        ma_window = 14
+        stock_fig = finance_charts.stock_chart(st.session_state.company, ma_window)
+        st.subheader(f"Closing Price with {ma_window}-Day Moving Average")
+        st.pyplot(fig)
