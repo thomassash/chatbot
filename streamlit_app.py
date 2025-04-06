@@ -79,4 +79,4 @@ with col2:
         ma_window = 14
         stock_fig = finance_charts.stock_chart(st.session_state.company, ma_window)
         st.subheader(f"Closing Price with {ma_window}-Day Moving Average")
-        st.pyplot(fig)
+        st.pyplot(stock_fig)

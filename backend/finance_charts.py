@@ -4,7 +4,7 @@ import requests
 import datetime
 import matplotlib
 
-matplotlib.use('TkAgg')
+#matplotlib.use('TkAgg')
 
 
 def get_ticker(company_name):
