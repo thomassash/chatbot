@@ -4,11 +4,13 @@ import json
 from backend import process_question
 from backend import finance_charts
 
+st.set_page_config(layout="wide")
+
 col1, col2 = st.columns(2)
 
 with col1:
     # Show title and description.
-    st.title("💬 Chatbot")
+    st.markdown("### 💬 Chatbot")
     st.write(
         "This is a simple chatbot that uses OpenAI's GPT-3.5 model to generate responses. "
         "To use this app, you need to provide an OpenAI API key, which you can get [here](https://platform.openai.com/account/api-keys). "
@@ -75,7 +77,7 @@ with col2:
     if "company" not in st.session_state:
         pass
     else:
-        st.title(st.session_state.company + " Information")
+        st.markdown("### " + st.session_state.company + " Information")
         ma_window = 14
         stock_fig = finance_charts.stock_chart(st.session_state.company, ma_window)
         st.subheader(f"Closing Price with {ma_window}-Day Moving Average")
