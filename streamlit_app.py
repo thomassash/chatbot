@@ -17,7 +17,7 @@ with col1:
     st.write(
         "This is a simple chatbot that uses OpenAI's GPT-4o-mini model to generate responses. "
         "To use this app, you need to provide an OpenAI API key, which you can get [here](https://platform.openai.com/account/api-keys). "
-        "THIS IS A TEST APPLICATION AND IS NOT INTENDED FOR PRODUCTION USE."
+        "THIS IS A TEST APPLICATION AND IS NOT INTENDED FOR PRODUCTION USE. CAN CURRENTLY JUST TYPE ANY OPENAI KEY AND WILL WORK."
     )
 
     # Ask user for their OpenAI API key via `st.text_input`.
