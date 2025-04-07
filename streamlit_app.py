@@ -9,40 +9,9 @@ st.set_page_config(layout="wide")
 col1, col2 = st.columns(2)
 
 
+
+
 with col1:
-    if "company" not in st.session_state:
-        pass
-    else:
-        st.markdown("### " + st.session_state.company + " Information")
-        ma_window = 14
-        stock_fig = finance_charts.stock_chart(st.session_state.company, ma_window)
-        st.markdown(f"##### Closing Price with {ma_window}-Day Moving Average")
-        st.pyplot(stock_fig)
-
-        # Provides summary of most recent earnings call
-        st.markdown("##### " + st.session_state.company + ": Last earnings call, short summary")
-        # Provides date of earnings call
-        stream1 = json.loads(process_question.process("What is the date of the latest earnings call of " + st.session_state.company + "? Provide only the date and time as output in format month-day-year time."))
-        response1 = stream1['text']
-        st.markdown("Date: " + response1)
-        # Provides summary of most recent earnings call
-        stream2 = json.loads(process_question.process("Provide a three bullet summary of the most recent earnings call for " + st.session_state.company + ". Each bullet should be one short line only."))
-        response2 = stream2['text']
-        st.markdown(response2)
-
-        # Provides summary of penultimate earnings call
-        st.markdown("##### " + st.session_state.company + ": Penultimate earnings call, short summary")
-        # Provides date of earnings call
-        stream3 = json.loads(process_question.process("What is the date of the last but one earnings call of " + st.session_state.company + "? Provide only the date and time as output in format month-day-year time."))
-        response3 = stream3['text']
-        st.markdown("Date: " + response3)
-        # Provides summary of penultimate earnings call
-        stream4 = json.loads(process_question.process("Provide a three bullet summary of the last but one earnings call for " + st.session_state.company + ". Each bullet should be one short line only."))
-        response4 = stream4['text']
-        st.markdown(response4)
-
-
-with col2:
     # Show title and description.
     st.markdown("### 💬 Chatbot")
     st.write(
@@ -63,6 +32,7 @@ with col2:
             st.info("Please add a company name to continue.", icon="🏢")
         else:
             st.session_state.company = company
+            st.info("Note: loading company information (left had side) may take a moment.")
             # # Create an OpenAI client.
             # client = OpenAI(api_key=openai_api_key)
 
@@ -106,3 +76,37 @@ with col2:
                 with st.chat_message("assistant"):
                     st.write_stream(process_question.stream_data(response))
                 st.session_state.messages.append({"role": "assistant", "content": response})
+
+
+with col2:
+    if "company" not in st.session_state:
+        pass
+    else:
+        st.markdown("### " + st.session_state.company + " Information")
+        ma_window = 14
+        stock_fig = finance_charts.stock_chart(st.session_state.company, ma_window)
+        st.markdown(f"##### Closing Price with {ma_window}-Day Moving Average")
+        st.pyplot(stock_fig)
+
+        # Provides summary of most recent earnings call
+        st.markdown("##### " + st.session_state.company + ": Last earnings call, short summary")
+        # Provides date of earnings call
+        stream1 = json.loads(process_question.process("What is the date of the latest earnings call of " + st.session_state.company + "? Provide only the date and time as output in format month-day-year time."))
+        response1 = stream1['text']
+        st.markdown("Date: " + response1)
+        # Provides summary of most recent earnings call
+        stream2 = json.loads(process_question.process("Provide a three bullet summary of the most recent earnings call for " + st.session_state.company + ". Each bullet should be one short line only."))
+        response2 = stream2['text']
+        st.markdown(response2)
+
+        # Provides summary of penultimate earnings call
+        st.markdown("##### " + st.session_state.company + ": Penultimate earnings call, short summary")
+        # Provides date of earnings call
+        stream3 = json.loads(process_question.process("What is the date of the last but one earnings call of " + st.session_state.company + "? Provide only the date and time as output in format month-day-year time."))
+        response3 = stream3['text']
+        st.markdown("Date: " + response3)
+        # Provides summary of penultimate earnings call
+        stream4 = json.loads(process_question.process("Provide a three bullet summary of the last but one earnings call for " + st.session_state.company + ". Each bullet should be one short line only."))
+        response4 = stream4['text']
+        st.markdown(response4)
+
