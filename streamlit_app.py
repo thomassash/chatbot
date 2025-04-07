@@ -80,11 +80,11 @@ with col2:
         st.markdown("### " + st.session_state.company + " Information")
         ma_window = 14
         stock_fig = finance_charts.stock_chart(st.session_state.company, ma_window)
-        st.subheader(f"Closing Price with {ma_window}-Day Moving Average")
+        st.markdown(f"##### Closing Price with {ma_window}-Day Moving Average")
         st.pyplot(stock_fig)
 
         # Provides summary of most recent earnings call
-        st.subheader(st.session_state.company + ": Last earnings call, short summary")
+        st.markdown("##### " + st.session_state.company + ": Last earnings call, short summary")
         # Provides date of earnings call
         stream1 = json.loads(process_question.process("What is the date of the latest earnings call of " + st.session_state.company + "? Provide only the date and time as output in format month-day-year time."))
         response1 = stream1['text']
@@ -95,7 +95,7 @@ with col2:
         st.markdown(response2)
 
         # Provides summary of penultimate earnings call
-        st.subheader(st.session_state.company + ": Last earnings call, short summary")
+        st.markdown("##### " + st.session_state.company + ": Penultimate earnings call, short summary")
         # Provides date of earnings call
         stream3 = json.loads(process_question.process("What is the date of the last but one earnings call of " + st.session_state.company + "? Provide only the date and time as output in format month-day-year time."))
         response3 = stream3['text']
