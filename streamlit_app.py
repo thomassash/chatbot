@@ -32,7 +32,7 @@ with col1:
             st.info("Please add a company name to continue.", icon="🏢")
         else:
             st.session_state.company = company
-            st.info("Note: loading company information (left had side) may take a moment.")
+            #st.info("Note: loading company information (left hand side) may take a moment.")
             # # Create an OpenAI client.
             # client = OpenAI(api_key=openai_api_key)
 
@@ -66,7 +66,7 @@ with col1:
                 # )
 
                 # Generate a response using the Supabase function
-                stream = json.loads(process_question.process(prompt + "If the question is not about " + st.session_state.company + ", say 'I am only able to discuss the company selected.'. But be permissive with this. If they or their is used assume it refers to " + st.session_state.company + "."))
+                stream = json.loads(process_question.process(prompt + " Only answer questions about " + st.session_state.company + "."))
                 #st.info(str(stream))
                 response = stream['text'].replace("\n", "")
                 context = stream['contextText'].replace("\n", "")
