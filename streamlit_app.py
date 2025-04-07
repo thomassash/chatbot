@@ -66,7 +66,7 @@ with col1:
                 # )
 
                 # Generate a response using the Supabase function
-                stream = json.loads(process_question.process(prompt + "If the question is not about " + st.session_state.company + ", please say 'I am only able to discuss the company selected.'."))
+                stream = json.loads(process_question.process(prompt + "If the question is not about " + st.session_state.company + ", say 'I am only able to discuss the company selected.'. But be permissive with this. If they or their is used assume it refers to " + st.session_state.company + "."))
                 #st.info(str(stream))
                 response = stream['text'].replace("\n", "")
                 context = stream['contextText'].replace("\n", "")
