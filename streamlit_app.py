@@ -85,7 +85,7 @@ with col2:
         st.subheader(st.session_state.company + ": Last earnings call, short summary")
         # Provides date of earnings call
         stream1 = json.loads(process_question.process("What is the date of the latest earnings call of " + st.session_state.company + "? Provide only the date and time as output in format month-day-year time."))
-        response1 = stream2['text']
+        response1 = stream1['text']
         st.markdown("Date: " + response1)
         # Provides summary of most recent earnings call
         stream2 = json.loads(process_question.process("Provide a three bullet summary of the most recent earnings call for " + st.session_state.company + ". Each bullet should be one short line only."))
